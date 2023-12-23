@@ -11,6 +11,7 @@ import {
 	Link,
 } from 'react-router-dom';
 import Login from './Pages/Login';
+import Root from './Pages';
 
 const root = ReactDOM.createRoot(
 	document.getElementById('root') as HTMLElement
@@ -19,7 +20,13 @@ const root = ReactDOM.createRoot(
 const router = createBrowserRouter([
 	{
 		path: '/',
-		element: <Login />,
+		element: <Root />,
+		children: [
+			{
+				path: 'login',
+				element: <Login />,
+			},
+		],
 	},
 ]);
 root.render(
