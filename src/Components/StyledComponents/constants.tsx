@@ -1,6 +1,7 @@
 import { css } from 'styled-components';
 
-export const HEADTHEMECOLOR = '#252F3D';
+export const HEAD_THEME_COLOR = '#252F3D';
+export const BUTTON_THEME_COLOR = '#4790A1';
 export const SIZES = {
 	MOBILE: '320px',
 	TABLET: '768px',

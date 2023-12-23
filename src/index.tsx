@@ -2,12 +2,9 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
 import reportWebVitals from './reportWebVitals';
-import { createRoot } from 'react-dom/client';
 import {
 	createBrowserRouter,
 	RouterProvider,
-	Route,
-	Link,
 } from 'react-router-dom';
 import Root from './Pages';
 import CreateAccount from './Pages/CreateAccount';

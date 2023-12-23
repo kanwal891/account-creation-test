@@ -1,8 +1,8 @@
 import styled, { css } from 'styled-components';
-import { HEADTHEMECOLOR, laptop } from './constants';
+import { HEAD_THEME_COLOR, laptop } from './constants';
 
 export const PageHeader = styled.div`
-	background: ${HEADTHEMECOLOR};
+	background: ${HEAD_THEME_COLOR};
 	display: flex;
 	align-items: center;
 	height: 3.5rem;
