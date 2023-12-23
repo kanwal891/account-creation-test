@@ -1,6 +1,5 @@
 import { InputLabel } from '@mui/material';
 import FormControl from '@mui/material/FormControl';
-
 import MenuItem from '@mui/material/MenuItem';
 import Select from '@mui/material/Select';
 import parsePhoneNumber from 'libphonenumber-js';
@@ -12,6 +11,7 @@ import {
 	FormLabel,
 	FormWrapper,
 	PlaceholderSpan,
+	ButtonWrapper,
 } from './StyledComponents/createAccountStyles';
 
 export const CreateUserform = () => {
@@ -51,10 +51,9 @@ export const CreateUserform = () => {
 					style={{
 						display: 'flex',
 						justifyContent: 'space-between',
-						maxWidth: '27rem',
 					}}
 				>
-					<FormControl sx={{ minWidth: 124 }}>
+					<FormControl sx={{ minWidth: 80 }} className="birthDateWidth">
 						<InputLabel>
 							{
 								<PlaceholderSpan>
@@ -69,7 +68,7 @@ export const CreateUserform = () => {
 						</Select>
 					</FormControl>
 
-					<FormControl sx={{ minWidth: 124 }}>
+					<FormControl sx={{ minWidth: 100 }} className="birthDateWidth">
 						<InputLabel>
 							{
 								<PlaceholderSpan>
@@ -84,7 +83,7 @@ export const CreateUserform = () => {
 						</Select>
 					</FormControl>
 
-					<FormControl sx={{ minWidth: 124 }}>
+					<FormControl sx={{ minWidth: 100 }} className="birthDateWidth">
 						<InputLabel>
 							{
 								<PlaceholderSpan>
@@ -129,18 +128,10 @@ export const CreateUserform = () => {
 					}
 				/>
 			</FormWrapper>
-			<div
-				style={{
-					display: 'flex',
-					justifyContent: 'flex-end',
-					marginTop: '2rem',
-					marginBottom: '2rem',
-					columnGap: '2rem',
-				}}
-			>
+			<ButtonWrapper>
 				<CancelButton>Cancel</CancelButton>
 				<SubmitButton>Submit</SubmitButton>
-			</div>
+			</ButtonWrapper>
 		</>
 	);
 };

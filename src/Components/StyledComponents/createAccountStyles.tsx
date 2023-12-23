@@ -1,11 +1,22 @@
 import { TextField } from '@mui/material';
 import { MuiTelInput } from 'mui-tel-input';
 import styled, { css } from 'styled-components';
+import { mobile, tablet } from './constants';
 
 export const FormWrapper = styled.form`
 	border-radius: 0.5rem;
 	box-shadow: 0px 4px 30px 0px rgba(0, 0, 0, 0.08);
 	padding: 25px 40px;
+	${mobile(css`
+		padding: 15px 10px;
+		box-shadow: none;
+	`)}
+	.birthDateWidth {
+    ${tablet(css`
+     width: 80px;
+    `)}
+		width: 124px;
+	}
 `;
 export const Heading = styled.div`
 	font-weight: 700;
@@ -33,8 +44,27 @@ export const PlaceholderSpan = styled.span`
 export const CreateUserTextField = styled(TextField)`
 	width: 27rem;
 	height: 50px;
+	${tablet(css`
+		width: 18rem;
+	`)}
 `;
 export const CusomTelField = styled(MuiTelInput)`
 	width: 27rem;
 	height: 50px;
+	${tablet(css`
+		width: 18rem;
+	`)}
+`;
+
+export const ButtonWrapper = styled.div`
+	display: flex;
+	justify-content: flex-end;
+	margin-top: 2rem;
+	margin-bottom: 2rem;
+	column-gap: 2rem;
+	${mobile(css`
+		flex-direction: column;
+		row-gap: 1rem;
+    padding: 10px;
+	`)}
 `;
