@@ -1,7 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
-import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { createRoot } from 'react-dom/client';
 import {
@@ -10,7 +9,8 @@ import {
 	Route,
 	Link,
 } from 'react-router-dom';
-import Login from './Pages/Login';
+import Root from './Pages';
+import CreateAccount from './Pages/CreateAccount';
 
 const root = ReactDOM.createRoot(
 	document.getElementById('root') as HTMLElement
@@ -19,7 +19,14 @@ const root = ReactDOM.createRoot(
 const router = createBrowserRouter([
 	{
 		path: '/',
-		element: <Login />,
+
+		element: <Root />,
+		children: [
+			{
+				path: 'create-account',
+				element: <CreateAccount />,
+			},
+		],
 	},
 ]);
 root.render(
