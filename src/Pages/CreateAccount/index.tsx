@@ -1,7 +1,7 @@
 import {
 	DivWithhorizontalAndVerticalCenterContent,
 	MobileOnlyDiv,
-} from '../../Components/StyledComponents/common';
+} from '../../Components/StyledComponents/shared';
 import CreateUserform from '../../Components/createUserForm';
 import { Heading } from '../../Components/StyledComponents/createAccountStyles';
 

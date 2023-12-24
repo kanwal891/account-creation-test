@@ -3,6 +3,7 @@ import FormControl from '@mui/material/FormControl';
 import MenuItem from '@mui/material/MenuItem';
 import Select from '@mui/material/Select';
 import { useForm, Controller } from 'react-hook-form';
+import parsePhoneNumber from 'libphonenumber-js';
 import { useState } from 'react';
 import {
 	contactNumberRules,
@@ -11,13 +12,14 @@ import {
 	fullNameRules,
 	getMonths,
 	getPreviousYearsList,
+	handlerCreateUser,
 	passwordRules,
 } from '../Helper/createUserFormHelper';
 import {
 	CancelButton,
 	MobileOnlyDiv,
 	SubmitButton,
-} from './StyledComponents/common';
+} from './StyledComponents/shared';
 import {
 	CreateUserTextField,
 	CusomTelField,
@@ -55,6 +57,7 @@ export const CreateUserform = () => {
 	const [day, setDay] = useState('');
 	const [month, setMonth] = useState('');
 	const [year, setYear] = useState('');
+
 	const handleChange = (value: string) => {
 		setContactNumber(value);
 	};
@@ -63,7 +66,13 @@ export const CreateUserform = () => {
 			<FormWrapper
 				onSubmit={handleSubmit((data: any, e: any) => {
 					e.stopPropagation();
-					console.log('hereh', data);
+					handlerCreateUser({
+						full_name: data.fullName.trim(),
+						contact_number: parsePhoneNumber(data.contactNumber)?.number || '',
+						email: data.email,
+						date_of_birth: `${data.day}/${data.month}/${data.year}`,
+						password: data.password,
+					});
 					return false;
 				})}
 			>
@@ -159,7 +168,10 @@ export const CreateUserform = () => {
 										{Array.from(Array(31).keys()).map(
 											(Day: any, index: number) => {
 												return (
-													<MenuItem value={index + 1} key={index + 1}>
+													<MenuItem
+														value={index + 1 < 10 ? `0${index + 1}` : index + 1}
+														key={index + 1}
+													>
 														{index + 1 < 10 ? `0${index + 1}` : index + 1}
 													</MenuItem>
 												);
@@ -195,7 +207,12 @@ export const CreateUserform = () => {
 									>
 										{getMonths().map(
 											(month: { label: string; value: number }) => (
-												<MenuItem key={month.value} value={month.value}>
+												<MenuItem
+													key={month.value}
+													value={
+														month.value > 9 ? month.value : `0${month.value}`
+													}
+												>
 													{month.label}
 												</MenuItem>
 											)
