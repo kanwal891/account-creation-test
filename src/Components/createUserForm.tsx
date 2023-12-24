@@ -2,9 +2,22 @@ import { InputLabel } from '@mui/material';
 import FormControl from '@mui/material/FormControl';
 import MenuItem from '@mui/material/MenuItem';
 import Select from '@mui/material/Select';
-import parsePhoneNumber from 'libphonenumber-js';
+import { useForm, Controller } from 'react-hook-form';
 import { useState } from 'react';
-import { CancelButton, SubmitButton } from './StyledComponents/common';
+import {
+	contactNumberRules,
+	dateRules,
+	emailRules,
+	fullNameRules,
+	getMonths,
+	getPreviousYearsList,
+	passwordRules,
+} from '../Helper/createUserFormHelper';
+import {
+	CancelButton,
+	MobileOnlyDiv,
+	SubmitButton,
+} from './StyledComponents/common';
 import {
 	CreateUserTextField,
 	CusomTelField,
@@ -12,126 +25,303 @@ import {
 	FormWrapper,
 	PlaceholderSpan,
 	ButtonWrapper,
+	ErrorSpan,
 } from './StyledComponents/createAccountStyles';
 
+const RenderErrorMessage = ({ errorField }: any) => {
+	return (
+		<ErrorSpan>
+			{errorField && (
+				<span>
+					{typeof errorField.message === 'string' ? errorField.message : ''}
+				</span>
+			)}
+		</ErrorSpan>
+	);
+};
 export const CreateUserform = () => {
-	const [value, setValue] = useState('');
+	const {
+		handleSubmit,
+		control,
+		formState: { errors },
+		watch,
+		reset,
+	} = useForm({
+		mode: 'onSubmit', // first validation on submit
+		reValidateMode: 'onChange', // if error in form after first submit, next validation is on field change
+	});
 
+	const [contactNumber, setContactNumber] = useState('');
+	const [day, setDay] = useState('');
+	const [month, setMonth] = useState('');
+	const [year, setYear] = useState('');
 	const handleChange = (value: string) => {
-		console.log('value is', value, parsePhoneNumber(value)?.isValid());
-		setValue(value);
+		setContactNumber(value);
 	};
 	return (
 		<>
-			<FormWrapper>
+			<FormWrapper
+				onSubmit={handleSubmit((data: any, e: any) => {
+					e.stopPropagation();
+					console.log('hereh', data);
+					return false;
+				})}
+			>
+				<MobileOnlyDiv>
+					<div
+						style={{
+							width: '100%',
+							height: '1px',
+							border: '0.1px solid #D8E0E9',
+						}}
+					/>
+				</MobileOnlyDiv>
+
+				{/* Full Name Field  */}
 				<FormLabel>Full Name</FormLabel>
-				<CreateUserTextField
-					label={
-						<PlaceholderSpan>
-							Full Name<sup style={{ color: 'red' }}>*</sup>
-						</PlaceholderSpan>
-					}
+				<Controller
+					control={control}
+					name="fullName"
+					rules={fullNameRules}
+					render={({ field: { onChange, onBlur, value, ref } }) => {
+						return (
+							<CreateUserTextField
+								value={value || ''}
+								onChange={onChange}
+								label={
+									<PlaceholderSpan>
+										Full Name<sup style={{ color: 'red' }}>*</sup>
+									</PlaceholderSpan>
+								}
+							/>
+						);
+					}}
 				/>
+				<RenderErrorMessage errorField={errors.fullName} />
 
+				{/* Contact number field */}
 				<FormLabel>Contact Number</FormLabel>
-				<CusomTelField
-					defaultCountry="CA"
-					onlyCountries={['CA']}
-					value={value}
-					onChange={handleChange}
-					label={
-						<PlaceholderSpan>
-							Contact number<sup style={{ color: 'red' }}>*</sup>
-						</PlaceholderSpan>
-					}
+				<Controller
+					control={control}
+					name="contactNumber"
+					rules={contactNumberRules}
+					render={({ field: { onChange, value, onBlur, ref } }) => {
+						return (
+							<CusomTelField
+								defaultCountry="CA"
+								onlyCountries={['CA']}
+								value={contactNumber}
+								onChange={(e: any) => {
+									handleChange(e);
+									onChange(e);
+								}}
+								label={
+									<PlaceholderSpan>
+										Contact number<sup style={{ color: 'red' }}>*</sup>
+									</PlaceholderSpan>
+								}
+							/>
+						);
+					}}
 				/>
+				<RenderErrorMessage errorField={errors.contactNumber} />
 
-				<FormLabel>Birth Date</FormLabel>
+				{/* Birthdate Field */}
+				<FormLabel>Birthdate</FormLabel>
 				<div
 					style={{
 						display: 'flex',
 						justifyContent: 'space-between',
 					}}
 				>
-					<FormControl sx={{ minWidth: 80 }} className="birthDateWidth">
-						<InputLabel>
-							{
-								<PlaceholderSpan>
-									Day<sup style={{ color: 'red' }}>*</sup>
-								</PlaceholderSpan>
-							}
-						</InputLabel>
-						<Select label="Day">
-							<MenuItem value={10}>Ten</MenuItem>
-							<MenuItem value={20}>Twenty</MenuItem>
-							<MenuItem value={30}>Thirty</MenuItem>
-						</Select>
-					</FormControl>
+					<Controller
+						control={control}
+						name="day"
+						rules={dateRules(`${year}/${month}/${day}`)}
+						render={({ field: { onChange, value, onBlur, ref } }) => {
+							return (
+								<FormControl sx={{ minWidth: 80 }} className="birthDateWidth">
+									<InputLabel>
+										{
+											<PlaceholderSpan>
+												Day<sup style={{ color: 'red' }}>*</sup>
+											</PlaceholderSpan>
+										}
+									</InputLabel>
+									<Select
+										label="Day"
+										value={value || ''}
+										onChange={(e: any) => {
+											setDay(e.target.value);
+											onChange(e);
+										}}
+									>
+										{Array.from(Array(31).keys()).map(
+											(Day: any, index: number) => {
+												return (
+													<MenuItem value={index + 1} key={index + 1}>
+														{index + 1 < 10 ? `0${index + 1}` : index + 1}
+													</MenuItem>
+												);
+											}
+										)}
+									</Select>
+								</FormControl>
+							);
+						}}
+					/>
 
-					<FormControl sx={{ minWidth: 100 }} className="birthDateWidth">
-						<InputLabel>
-							{
-								<PlaceholderSpan>
-									Month<sup style={{ color: 'red' }}>*</sup>
-								</PlaceholderSpan>
-							}
-						</InputLabel>
-						<Select label="Month">
-							<MenuItem value={10}>Ten</MenuItem>
-							<MenuItem value={20}>Twenty</MenuItem>
-							<MenuItem value={30}>Thirty</MenuItem>
-						</Select>
-					</FormControl>
+					<Controller
+						control={control}
+						name="month"
+						rules={dateRules(`${year}/${month}/${day}`)}
+						render={({ field: { onChange, value, onBlur, ref } }) => {
+							return (
+								<FormControl sx={{ minWidth: 100 }} className="birthDateWidth">
+									<InputLabel>
+										{
+											<PlaceholderSpan>
+												Month<sup style={{ color: 'red' }}>*</sup>
+											</PlaceholderSpan>
+										}
+									</InputLabel>
+									<Select
+										label="Month"
+										value={value}
+										onChange={(e: any) => {
+											setMonth(e.target.value);
+											onChange(e);
+										}}
+									>
+										{getMonths().map(
+											(month: { label: string; value: number }) => (
+												<MenuItem key={month.value} value={month.value}>
+													{month.label}
+												</MenuItem>
+											)
+										)}
+									</Select>
+								</FormControl>
+							);
+						}}
+					/>
 
-					<FormControl sx={{ minWidth: 100 }} className="birthDateWidth">
-						<InputLabel>
-							{
-								<PlaceholderSpan>
-									Year<sup style={{ color: 'red' }}>*</sup>
-								</PlaceholderSpan>
-							}
-						</InputLabel>
-						<Select label="Year">
-							<MenuItem value={10}>Ten</MenuItem>
-							<MenuItem value={20}>Twenty</MenuItem>
-							<MenuItem value={30}>Thirty</MenuItem>
-						</Select>
-					</FormControl>
+					<Controller
+						control={control}
+						name="year"
+						rules={dateRules(`${year}/${month}/${day}`)}
+						render={({ field: { onChange, value, onBlur, ref } }) => {
+							return (
+								<FormControl sx={{ minWidth: 100 }} className="birthDateWidth">
+									<InputLabel>
+										{
+											<PlaceholderSpan>
+												Year<sup style={{ color: 'red' }}>*</sup>
+											</PlaceholderSpan>
+										}
+									</InputLabel>
+									<Select
+										label="Year"
+										value={value || ''}
+										onChange={(e: any) => {
+											setYear(e.target.value);
+											onChange(e);
+										}}
+									>
+										{getPreviousYearsList(150).map((year: any) => (
+											<MenuItem key={year.value} value={year.value}>
+												{year.label}
+											</MenuItem>
+										))}
+									</Select>
+								</FormControl>
+							);
+						}}
+					/>
 				</div>
+				{/* Since all selectore are validated with same rule, thus to show date error are enough. */}
+				<RenderErrorMessage errorField={errors.day} />
+
+				{/* Email Address Field */}
 				<FormLabel>Email Adress</FormLabel>
-				<CreateUserTextField
-					type="email"
-					label={
-						<PlaceholderSpan>
-							Email Address<sup style={{ color: 'red' }}>*</sup>
-						</PlaceholderSpan>
-					}
+				<Controller
+					control={control}
+					name="email"
+					rules={emailRules}
+					render={({ field: { onChange, value, onBlur, ref } }) => {
+						return (
+							<CreateUserTextField
+								// type="email"
+								onChange={onChange}
+								value={value || ''}
+								label={
+									<PlaceholderSpan>
+										Email Address<sup style={{ color: 'red' }}>*</sup>
+									</PlaceholderSpan>
+								}
+							/>
+						);
+					}}
 				/>
+				<RenderErrorMessage errorField={errors.email} />
 
+				{/* password Field */}
 				<FormLabel>Password</FormLabel>
-				<CreateUserTextField
-					type="password"
-					label={
-						<PlaceholderSpan>
-							Password<sup style={{ color: 'red' }}>*</sup>
-						</PlaceholderSpan>
-					}
+				<Controller
+					control={control}
+					name="password"
+					rules={passwordRules}
+					render={({ field: { onChange, value, onBlur, ref } }) => {
+						return (
+							<CreateUserTextField
+								value={value || ''}
+								type="password"
+								onChange={onChange}
+								label={
+									<PlaceholderSpan>
+										Password<sup style={{ color: 'red' }}>*</sup>
+									</PlaceholderSpan>
+								}
+							/>
+						);
+					}}
 				/>
+				<RenderErrorMessage errorField={errors.password} />
 
+				{/* confirm password field */}
 				<FormLabel>Confirm Password</FormLabel>
-				<CreateUserTextField
-					type="password"
-					label={
-						<PlaceholderSpan>
-							Confirm Password<sup style={{ color: 'red' }}>*</sup>
-						</PlaceholderSpan>
-					}
+				<Controller
+					control={control}
+					name="confirmPassword"
+					rules={{
+						validate: (val: string) => {
+							if (watch('password') != val) {
+								return 'Your passwords do no match';
+							}
+						},
+					}}
+					render={({ field: { onChange, value, onBlur, ref } }) => {
+						return (
+							<CreateUserTextField
+								value={value || ''}
+								type="password"
+								onChange={onChange}
+								label={
+									<PlaceholderSpan>
+										Confirm Password<sup style={{ color: 'red' }}>*</sup>
+									</PlaceholderSpan>
+								}
+							/>
+						);
+					}}
 				/>
+				<RenderErrorMessage errorField={errors.confirmPassword} />
+
+				<ButtonWrapper>
+					<CancelButton onClick={() => reset({})}>Cancel</CancelButton>
+					<SubmitButton type="submit">Submit</SubmitButton>
+				</ButtonWrapper>
 			</FormWrapper>
-			<ButtonWrapper>
-				<CancelButton>Cancel</CancelButton>
-				<SubmitButton>Submit</SubmitButton>
-			</ButtonWrapper>
 		</>
 	);
 };

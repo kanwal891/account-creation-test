@@ -12,9 +12,9 @@ export const FormWrapper = styled.form`
 		box-shadow: none;
 	`)}
 	.birthDateWidth {
-    ${tablet(css`
-     width: 80px;
-    `)}
+		${tablet(css`
+			width: 80px;
+		`)}
 		width: 124px;
 	}
 `;
@@ -23,6 +23,9 @@ export const Heading = styled.div`
 	font-size: 1.25rem;
 	margin-top: 2.5rem;
 	margin-bottom: 1.5rem;
+	${mobile(css`
+		margin-bottom: 0.5rem;
+	`)}
 	color: var(--Text, #2c3642);
 `;
 
@@ -65,6 +68,13 @@ export const ButtonWrapper = styled.div`
 	${mobile(css`
 		flex-direction: column;
 		row-gap: 1rem;
-    padding: 10px;
+		padding: 10px;
 	`)}
+`;
+
+export const ErrorSpan = styled.p`
+	color: #da1e28;
+	font-size: 12px;
+  margin: 0;
+  padding: 5px
 `;

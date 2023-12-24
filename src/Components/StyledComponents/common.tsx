@@ -1,6 +1,6 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import Button from '@mui/material/Button';
-import { BUTTON_THEME_COLOR } from './constants';
+import { BUTTON_THEME_COLOR, mobile } from './constants';
 
 export const DivWithhorizontalAndVerticalCenterContent = styled.div`
 	display: flex;
@@ -28,4 +28,11 @@ export const SubmitButton = styled.button`
 	border-radius: 6px;
 	cursor: pointer;
 	font-weight: 700;
+`;
+
+export const MobileOnlyDiv = styled.div`
+	display: none;
+	${mobile(css`
+		display: flex;
+	`)}
 `;
