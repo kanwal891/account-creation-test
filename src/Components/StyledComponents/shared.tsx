@@ -31,6 +31,9 @@ export const SubmitButton = styled.button`
 	border-radius: 6px;
 	cursor: pointer;
 	font-weight: 700;
+	a {
+		text-decoration: none;
+	}
 	&:disabled {
 		opacity: 0.5;
 		cursor: not-allowed;
