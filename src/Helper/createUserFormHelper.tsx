@@ -4,7 +4,6 @@ import requestApi from '../Services/requestHandler';
 import isDate from 'validator/lib/isDate';
 import isEmail from 'validator/lib/isEmail';
 import isStrongPassword from 'validator/lib/isStrongPassword';
-import Toast from '../Components/toast';
 export const getMonths = (): {
 	label: string;
 	value: number;
@@ -51,7 +50,7 @@ export const fullNameRules = {
 	required: 'Full name is mandatory.',
 	pattern: {
 		value: /^[a-zA-Z ]{2,30}$/,
-		message: 'Name must not contain symbols.',
+		message: 'Full name must not contain symbols.',
 	},
 };
 
@@ -63,9 +62,6 @@ export const contactNumberRules = {
 	},
 };
 
-const isLeapYear = (year: number) => {
-	return (year % 4 == 0 && year % 100 != 0) || year % 400 == 0;
-};
 export const isValidDOB = (dateStr: string) => {
 	if (!isDate(dateStr)) {
 		return 'Please enter a valid date';
@@ -91,7 +87,7 @@ export const emailRules = {
 	required: 'Email is mandatory.',
 	validate: {
 		isValidEmail: (v: string) =>
-			isEmail(v) || 'Sorry, this email address is not valid. Please try again',
+			isEmail(v) || 'Sorry, this email address is not valid. Please try again.',
 	},
 };
 
@@ -117,3 +113,7 @@ export const passwordRules = {
 export const handlerCreateUser = (data: UserData) => {
 	return requestApi('/users/create', 'POST', data);
 };
+
+export  const padZeroToNumber = (num:any) => {
+	return num < 10 ? `0${num}` : num;
+}

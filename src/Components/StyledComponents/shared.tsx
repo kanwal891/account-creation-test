@@ -1,5 +1,4 @@
 import styled, { css } from 'styled-components';
-import Button from '@mui/material/Button';
 import { BUTTON_THEME_COLOR, mobile } from './constants';
 
 export const DivWithhorizontalAndVerticalCenterContent = styled.div`

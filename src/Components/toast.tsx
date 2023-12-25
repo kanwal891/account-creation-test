@@ -48,7 +48,7 @@ const Toast = ({
 		setOpen(false);
 		reset?.();
 	};
-	console.log('open', open);
+
 	return (
 		<Snackbar
 			open={open}

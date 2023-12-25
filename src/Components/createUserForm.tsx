@@ -14,6 +14,7 @@ import {
 	getPreviousYearsList,
 	handlerCreateUser,
 	passwordRules,
+	padZeroToNumber,
 } from '../Helper/createUserFormHelper';
 import {
 	CancelButton,
@@ -42,6 +43,7 @@ const RenderErrorMessage = ({ errorField }: any) => {
 		</ErrorSpan>
 	);
 };
+
 export const CreateUserform = () => {
 	const {
 		handleSubmit,
@@ -62,9 +64,6 @@ export const CreateUserform = () => {
 	const [error, setError] = useState(false);
 	const [success, setSuccess] = useState(false);
 
-	// const handleChange = (value: string) => {
-	// 	setContactNumber(value);
-	// };
 	return (
 		<>
 			<FormWrapper
@@ -128,6 +127,7 @@ export const CreateUserform = () => {
 					render={({ field: { onChange, onBlur, value, ref } }) => {
 						return (
 							<CreateUserTextField
+								error={errors.fullName ? true : false}
 								value={value || ''}
 								onChange={onChange}
 								label={
@@ -202,10 +202,10 @@ export const CreateUserform = () => {
 											(Day: any, index: number) => {
 												return (
 													<MenuItem
-														value={index + 1 < 10 ? `0${index + 1}` : index + 1}
+														value={padZeroToNumber(index + 1)}
 														key={index + 1}
 													>
-														{index + 1 < 10 ? `0${index + 1}` : index + 1}
+														{padZeroToNumber(index + 1)}
 													</MenuItem>
 												);
 											}
@@ -242,9 +242,7 @@ export const CreateUserform = () => {
 											(month: { label: string; value: number }) => (
 												<MenuItem
 													key={month.value}
-													value={
-														month.value > 9 ? month.value : `0${month.value}`
-													}
+													value={padZeroToNumber(month.value)}
 												>
 													{month.label}
 												</MenuItem>
@@ -345,7 +343,7 @@ export const CreateUserform = () => {
 					name="confirmPassword"
 					rules={{
 						validate: (val: string) => {
-							if (watch('password') != val) {
+							if (watch('password') !== val) {
 								return 'Your passwords do no match';
 							}
 						},
@@ -379,6 +377,7 @@ export const CreateUserform = () => {
 						Cancel
 					</CancelButton>
 					<SubmitButton
+						name="submit"
 						disabled={loading}
 						className={loading ? 'disabled' : ''}
 						type={loading ? 'button' : 'submit'}
