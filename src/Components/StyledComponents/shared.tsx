@@ -18,6 +18,10 @@ export const CancelButton = styled.button`
 	border-radius: 6px;
 	cursor: pointer;
 	font-weight: 700;
+	&:disabled {
+		opacity: 0.5;
+		cursor: not-allowed;
+	}
 `;
 
 export const SubmitButton = styled.button`
@@ -28,6 +32,10 @@ export const SubmitButton = styled.button`
 	border-radius: 6px;
 	cursor: pointer;
 	font-weight: 700;
+	&:disabled {
+		opacity: 0.5;
+		cursor: not-allowed;
+	}
 `;
 
 export const MobileOnlyDiv = styled.div`

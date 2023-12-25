@@ -29,6 +29,7 @@ import {
 	ButtonWrapper,
 	ErrorSpan,
 } from './StyledComponents/createAccountStyles';
+import Toast from './toast';
 
 const RenderErrorMessage = ({ errorField }: any) => {
 	return (
@@ -53,29 +54,61 @@ export const CreateUserform = () => {
 		reValidateMode: 'onChange', // if error in form after first submit, next validation is on field change
 	});
 
-	const [contactNumber, setContactNumber] = useState('');
+	// const [contactNumber, setContactNumber] = useState('');
 	const [day, setDay] = useState('');
 	const [month, setMonth] = useState('');
 	const [year, setYear] = useState('');
+	const [loading, setLoading] = useState(false);
+	const [error, setError] = useState(false);
+	const [success, setSuccess] = useState(false);
 
-	const handleChange = (value: string) => {
-		setContactNumber(value);
-	};
+	// const handleChange = (value: string) => {
+	// 	setContactNumber(value);
+	// };
 	return (
 		<>
 			<FormWrapper
 				onSubmit={handleSubmit((data: any, e: any) => {
 					e.stopPropagation();
+					setLoading(true);
 					handlerCreateUser({
 						full_name: data.fullName.trim(),
 						contact_number: parsePhoneNumber(data.contactNumber)?.number || '',
 						email: data.email,
 						date_of_birth: `${data.day}/${data.month}/${data.year}`,
 						password: data.password,
-					});
-					return false;
+					})
+						.then(() => {
+							setSuccess(true);
+						})
+						.catch(() => {
+							setError(true);
+						})
+						.finally(() => {
+							setLoading(false);
+						});
 				})}
 			>
+				{success && (
+					<Toast
+						severity="success"
+						message="User account successfully created."
+						reset={() => {
+							setError(false);
+							setSuccess(false);
+						}}
+					/>
+				)}
+				{error && (
+					<Toast
+						severity="error"
+						message="There was an error creating the account."
+						reset={() => {
+							setError(false);
+							setSuccess(false);
+						}}
+					/>
+				)}
 				<MobileOnlyDiv>
 					<div
 						style={{
@@ -119,9 +152,9 @@ export const CreateUserform = () => {
 							<CusomTelField
 								defaultCountry="CA"
 								onlyCountries={['CA']}
-								value={contactNumber}
+								value={value || ''}
 								onChange={(e: any) => {
-									handleChange(e);
+									// handleChange(e);
 									onChange(e);
 								}}
 								label={
@@ -335,8 +368,23 @@ export const CreateUserform = () => {
 				<RenderErrorMessage errorField={errors.confirmPassword} />
 
 				<ButtonWrapper>
-					<CancelButton onClick={() => reset({})}>Cancel</CancelButton>
-					<SubmitButton type="submit">Submit</SubmitButton>
+					<CancelButton
+						disabled={loading}
+						className={loading ? 'disabled' : ''}
+						onClick={() => {
+							if (loading) return;
+							reset({});
+						}}
+					>
+						Cancel
+					</CancelButton>
+					<SubmitButton
+						disabled={loading}
+						className={loading ? 'disabled' : ''}
+						type={loading ? 'button' : 'submit'}
+					>
+						Submit
+					</SubmitButton>
 				</ButtonWrapper>
 			</FormWrapper>
 		</>

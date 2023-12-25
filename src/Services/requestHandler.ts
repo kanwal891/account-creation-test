@@ -18,8 +18,7 @@ const requestApi = async (
 		});
 		return response.data;
 	} catch (error) {
-		// return error
-		// throw error;
+		throw error;
 	}
 };
 export default requestApi;

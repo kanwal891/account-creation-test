@@ -4,6 +4,7 @@ import requestApi from '../Services/requestHandler';
 import isDate from 'validator/lib/isDate';
 import isEmail from 'validator/lib/isEmail';
 import isStrongPassword from 'validator/lib/isStrongPassword';
+import Toast from '../Components/toast';
 export const getMonths = (): {
 	label: string;
 	value: number;
@@ -114,7 +115,5 @@ export const passwordRules = {
 };
 
 export const handlerCreateUser = (data: UserData) => {
-	requestApi('/users/create', 'POST', data).then((res) => {
-		console.log('res', res);
-	});
+	return requestApi('/users/create', 'POST', data);
 };
