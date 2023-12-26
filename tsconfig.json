@@ -1,11 +1,7 @@
 {
   "compilerOptions": {
     "target": "es5",
-    "lib": [
-      "dom",
-      "dom.iterable",
-      "esnext"
-    ],
+    "lib": ["dom", "dom.iterable", "esnext"],
     "types": ["node", "jest"],
     "allowJs": true,
     "skipLibCheck": true,
@@ -21,7 +17,5 @@
     "noEmit": true,
     "jsx": "react-jsx"
   },
-  "include": [
-    "src"
-, "babel.config.js", "jest.config.js", "setupTests.ts"  ]
+  "include": ["src", "babel.config.js", "jest.config.js", "setupTests.ts"]
 }

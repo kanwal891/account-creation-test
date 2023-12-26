@@ -1,119 +1,119 @@
-import parsePhoneNumber from 'libphonenumber-js';
-import { UserData } from '../Interfaces/CreateUserInterface';
-import requestApi from '../Services/requestHandler';
-import isDate from 'validator/lib/isDate';
-import isEmail from 'validator/lib/isEmail';
-import isStrongPassword from 'validator/lib/isStrongPassword';
+import parsePhoneNumber from "libphonenumber-js";
+import { UserData } from "../Interfaces/CreateUserInterface";
+import requestApi from "../Services/requestHandler";
+import isDate from "validator/lib/isDate";
+import isEmail from "validator/lib/isEmail";
+import isStrongPassword from "validator/lib/isStrongPassword";
 export const getMonths = (): {
-	label: string;
-	value: number;
+  label: string;
+  value: number;
 }[] => {
-	return [
-		'January',
-		'Feburary',
-		'March',
-		'April',
-		'May',
-		'June',
-		'July',
-		'August',
-		'September',
-		'October',
-		'November',
-		'December',
-	].map((month, index) => {
-		return {
-			label: month,
-			value: index + 1,
-		};
-	});
+  return [
+    "January",
+    "Feburary",
+    "March",
+    "April",
+    "May",
+    "June",
+    "July",
+    "August",
+    "September",
+    "October",
+    "November",
+    "December",
+  ].map((month, index) => {
+    return {
+      label: month,
+      value: index + 1,
+    };
+  });
 };
 
 export const getPreviousYearsList = (
-	count: number
+  count: number,
 ): {
-	label?: string;
-	value?: number;
+  label?: string;
+  value?: number;
 }[] => {
-	const currentYear = new Date().getFullYear();
-	const years = [{}];
-	for (let currentCount = 0; currentCount < count; currentCount++) {
-		years.push({
-			label: currentYear - currentCount,
-			value: currentYear - currentCount,
-		});
-	}
-	return years;
+  const currentYear = new Date().getFullYear();
+  const years = [{}];
+  for (let currentCount = 0; currentCount < count; currentCount++) {
+    years.push({
+      label: currentYear - currentCount,
+      value: currentYear - currentCount,
+    });
+  }
+  return years;
 };
 
 export const fullNameRules = {
-	required: 'Full name is mandatory.',
-	pattern: {
-		value: /^[a-zA-Z ]{2,30}$/,
-		message: 'Full name must not contain symbols.',
-	},
+  required: "Full name is mandatory.",
+  pattern: {
+    value: /^[a-zA-Z ]{2,30}$/,
+    message: "Full name must not contain symbols.",
+  },
 };
 
 export const contactNumberRules = {
-	required: 'Contact number is mandatory',
-	validate: {
-		isValid: (v: any) =>
-			parsePhoneNumber(v)?.isValid() || 'Contact number is not valid',
-	},
+  required: "Contact number is mandatory",
+  validate: {
+    isValid: (v: any) =>
+      parsePhoneNumber(v)?.isValid() || "Contact number is not valid",
+  },
 };
 
 export const isValidDOB = (dateStr: string) => {
-	if (!isDate(dateStr)) {
-		return 'Please enter a valid date';
-	}
-	let today: any = new Date();
-	today.setHours(0, 0, 0, 0);
-	if (new Date(dateStr) > today) {
-		return 'Please ener a valid date';
-	}
-	return true;
+  if (!isDate(dateStr)) {
+    return "Please enter a valid date";
+  }
+  let today: any = new Date();
+  today.setHours(0, 0, 0, 0);
+  if (new Date(dateStr) > today) {
+    return "Please ener a valid date";
+  }
+  return true;
 };
 /**
  *
  * @param value "date format in YYYY/MM/DD"
  */
 export const dateRules = (value: any) => ({
-	validate: {
-		isValidDate: () => isValidDOB(value) || 'Not a valid birthdate',
-	},
+  validate: {
+    isValidDate: () => isValidDOB(value) || "Not a valid birthdate",
+  },
 });
 
 export const emailRules = {
-	required: 'Email is mandatory.',
-	validate: {
-		isValidEmail: (v: string) =>
-			isEmail(v) || 'Sorry, this email address is not valid. Please try again.',
-	},
+  required: "Email is mandatory.",
+  validate: {
+    isValidEmail: (v: string) =>
+      isEmail(v) || "Sorry, this email address is not valid. Please try again.",
+  },
 };
 
 export const passwordRules = {
-	minLength: {
-		value: 8,
-		message: 'Password must contain atleast 8 characters',
-	},
-	required: 'Password is mandatory',
-	validate: {
-		isStrong: (v: string) =>
-			isStrongPassword(v, {
-				minLength: 8,
-				minLowercase: 1,
-				minUppercase: 1,
-				minNumbers: 1,
-				minSymbols: 0,
-			}) ||
-			'Password must contain 1 lowercase character 1 uppercase character and 1 digit',
-	},
+  minLength: {
+    value: 8,
+    message: "Password must contain atleast 8 characters",
+  },
+  required: "Password is mandatory",
+  validate: {
+    isStrong: (v: string) =>
+      isStrongPassword(v, {
+        minLength: 8,
+        minLowercase: 1,
+        minUppercase: 1,
+        minNumbers: 1,
+        minSymbols: 0,
+      }) ||
+      "Password must contain 1 lowercase character 1 uppercase character and 1 digit",
+  },
 };
 
 export const handlerCreateUser = (data: UserData) => {
-	return requestApi('/users/create', 'POST', data);
+  return requestApi("/users/create", "POST", data);
 };
 
-export  const padZeroToNumber = (num:any) => {
-	return num < 10 ? `0${num}` : num;
-}
+export const padZeroToNumber = (num: any) => {
+  return num < 10 ? `0${num}` : num;
+};
