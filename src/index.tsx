@@ -3,8 +3,8 @@ import ReactDOM from "react-dom/client";
 import "./index.css";
 import reportWebVitals from "./reportWebVitals";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import Root from "./Pages";
-import CreateAccount from "./Pages/CreateAccount";
+import Root from "./pages";
+import CreateAccount from "./pages/CreateAccount";
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement,
@@ -13,7 +13,6 @@ const root = ReactDOM.createRoot(
 const router = createBrowserRouter([
   {
     path: "/",
-
     element: <Root />,
     children: [
       {

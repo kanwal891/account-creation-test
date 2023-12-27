@@ -1,9 +1,10 @@
 import parsePhoneNumber from "libphonenumber-js";
-import { UserData } from "../Interfaces/CreateUserInterface";
-import requestApi from "../Services/requestHandler";
+import { UserData } from "../interfaces/CreateUserInterface";
+import requestApi from "../services/requestHandler";
 import isDate from "validator/lib/isDate";
 import isEmail from "validator/lib/isEmail";
 import isStrongPassword from "validator/lib/isStrongPassword";
+
 export const getMonths = (): {
   label: string;
   value: number;
@@ -32,14 +33,14 @@ export const getMonths = (): {
 export const getPreviousYearsList = (
   count: number,
 ): {
-  label?: string;
-  value?: number;
+  label: string;
+  value: number;
 }[] => {
   const currentYear = new Date().getFullYear();
-  const years = [{}];
+  const years = [];
   for (let currentCount = 0; currentCount < count; currentCount++) {
     years.push({
-      label: currentYear - currentCount,
+      label: (currentYear - currentCount).toString(),
       value: currentYear - currentCount,
     });
   }
