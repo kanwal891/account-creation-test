@@ -2,12 +2,29 @@
 
 This project was created as an assignment.
 
-To view the list of libraries used see [Package.json](https://github.com/kanwal891/account-creation-test/blob/main/package.json)
+## Folder Structure
 
-To create a new route, edit router in [<rootdir>/index.tsx] and create comonent inside [Pages](https://github.com/kanwal891/account-creation-test/tree/main/src/Pages) folder.
+The project structure is organized as follows:
 
-Test cases are written in [Tests](https://github.com/kanwal891/account-creation-test/tree/main/src/Tests) folder.
+    src/
+        pages/: Contains components for different pages.
+        tests/: Includes test cases for the application.
+        [Other folders and files...]
 
+This project is a React application created as an assignment. It features a basic user creation and registration form with validations.
+
+## Getting Started
+
+### Installation
+
+To get started, clone this repository and install the project dependencies:
+
+```bash
+git clone https://github.com/kanwal891/account-creation-test.git
+cd account-creation-test
+
+npm install
+```
 ## Available Scripts
 
 In the project directory, you can run:
