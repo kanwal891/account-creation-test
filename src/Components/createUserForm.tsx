@@ -26,7 +26,6 @@ import {
   CusomTelField,
   FormLabel,
   FormWrapper,
-  PlaceholderSpan,
   ButtonWrapper,
   ErrorSpan,
 } from "./StyledComponents/createAccountStyles";
@@ -131,9 +130,9 @@ export const CreateUserForm = () => {
                 value={value || ""}
                 onChange={onChange}
                 label={
-                  <PlaceholderSpan>
+                  <>
                     Full Name<sup style={{ color: "red" }}>*</sup>
-                  </PlaceholderSpan>
+                  </>
                 }
               />
             );
@@ -158,9 +157,9 @@ export const CreateUserForm = () => {
                   onChange(e);
                 }}
                 label={
-                  <PlaceholderSpan>
+                  <>
                     Contact number<sup style={{ color: "red" }}>*</sup>
-                  </PlaceholderSpan>
+                  </>
                 }
               />
             );
@@ -185,9 +184,9 @@ export const CreateUserForm = () => {
                 <FormControl sx={{ minWidth: 80 }} className="birthDateWidth">
                   <InputLabel>
                     {
-                      <PlaceholderSpan>
+                      <>
                         Day<sup style={{ color: "red" }}>*</sup>
-                      </PlaceholderSpan>
+                      </>
                     }
                   </InputLabel>
                   <Select
@@ -225,9 +224,9 @@ export const CreateUserForm = () => {
                 <FormControl sx={{ minWidth: 100 }} className="birthDateWidth">
                   <InputLabel>
                     {
-                      <PlaceholderSpan>
+                      <>
                         Month<sup style={{ color: "red" }}>*</sup>
-                      </PlaceholderSpan>
+                      </>
                     }
                   </InputLabel>
                   <Select
@@ -263,9 +262,9 @@ export const CreateUserForm = () => {
                 <FormControl sx={{ minWidth: 100 }} className="birthDateWidth">
                   <InputLabel>
                     {
-                      <PlaceholderSpan>
+                      <>
                         Year<sup style={{ color: "red" }}>*</sup>
-                      </PlaceholderSpan>
+                      </>
                     }
                   </InputLabel>
                   <Select
@@ -303,9 +302,9 @@ export const CreateUserForm = () => {
                 onChange={onChange}
                 value={value || ""}
                 label={
-                  <PlaceholderSpan>
+                  <>
                     Email Address<sup style={{ color: "red" }}>*</sup>
-                  </PlaceholderSpan>
+                  </>
                 }
               />
             );
@@ -326,9 +325,9 @@ export const CreateUserForm = () => {
                 type="password"
                 onChange={onChange}
                 label={
-                  <PlaceholderSpan>
+                  <>
                     Password<sup style={{ color: "red" }}>*</sup>
-                  </PlaceholderSpan>
+                  </>
                 }
               />
             );
@@ -355,9 +354,9 @@ export const CreateUserForm = () => {
                 type="password"
                 onChange={onChange}
                 label={
-                  <PlaceholderSpan>
+                  <>
                     Confirm Password<sup style={{ color: "red" }}>*</sup>
-                  </PlaceholderSpan>
+                  </>
                 }
               />
             );

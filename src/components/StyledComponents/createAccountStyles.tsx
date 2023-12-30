@@ -34,7 +34,7 @@ export const FormLabel = styled.div`
   font-size: 1rem;
   font-weight: 700;
   line-height: 1.5rem;
-  margin-bottom: 16px;
+  margin-bottom: 10px;
   margin-top: 16px;
 `;
 
