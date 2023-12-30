@@ -1,6 +1,6 @@
-import { DivWithHorizontalAndVerticalCenterContent } from "../../components/StyledComponents/shared";
-import CreateUserForm from "../../components/createUserForm";
-import { Heading } from "../../components/StyledComponents/createAccountStyles";
+import { DivWithHorizontalAndVerticalCenterContent } from "../../Components/StyledComponents/shared";
+import CreateUserForm from "../../Components/createUserForm";
+import { Heading } from "../../Components/StyledComponents/createAccountStyles";
 
 const CreateAccount = () => {
   return (

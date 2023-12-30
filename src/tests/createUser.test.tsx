@@ -1,6 +1,6 @@
 import "@testing-library/jest-dom";
 import { act, render, screen } from "@testing-library/react";
-import CreateUserForm from "../components/createUserForm";
+import CreateUserForm from "../Components/createUserForm";
 import { fireEvent } from "@testing-library/react";
 
 describe("Test create user form:", () => {

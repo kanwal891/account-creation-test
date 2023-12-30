@@ -1,6 +1,6 @@
 import parsePhoneNumber from "libphonenumber-js";
-import { UserData } from "../interfaces/CreateUserInterface";
-import requestApi from "../services/requestHandler";
+import { UserData } from "../Interfaces/CreateUserInterface";
+import requestApi from "../Services/requestHandler";
 import isDate from "validator/lib/isDate";
 import isEmail from "validator/lib/isEmail";
 import isStrongPassword from "validator/lib/isStrongPassword";
